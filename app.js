@@ -8,9 +8,13 @@ import {
 } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 
+//引入视图组件
 import HomeTab  from './src/views/HomePage'
+import AuctionPage from './src/views/AuctionPage'
+import SalePage from './src/views/SalePage'
 import UserTab from './src/views/MinePage'
 
+//配置tab导航栏
 const App = TabNavigator(
     {
         HomeTab: {
@@ -21,6 +25,32 @@ const App = TabNavigator(
                 tabBarIcon: ({ tintColor, focused }) => (
                     <Image
                         source={require('./src/image/home.png')}
+                        style={[{tintColor: tintColor},styles.icon]}
+                    />
+                ),
+            }
+        },
+        AuctionTab: {
+            screen: AuctionPage,
+            path: '/auction',
+            navigationOptions: {
+                tabBarLabel: '竞拍',
+                tabBarIcon: ({ tintColor, focused }) => (
+                    <Image
+                        source={require('./src/image/me.png')}
+                        style={[{tintColor: tintColor},styles.icon]}
+                    />
+                ),
+            }
+        },
+        SaleTab: {
+            screen: SalePage,
+            path: '/sale',
+            navigationOptions: {
+                tabBarLabel: '拍卖',
+                tabBarIcon: ({ tintColor, focused }) => (
+                    <Image
+                        source={require('./src/image/me.png')}
                         style={[{tintColor: tintColor},styles.icon]}
                     />
                 ),
@@ -41,7 +71,7 @@ const App = TabNavigator(
         }
     },{
         initialRouteName: 'HomeTab',
-        animationEnabled: true,
+        animationEnabled: false,
         swipeEnabled: true,
         tabBarPosition: 'bottom', // 显示在底端，android 默认是显示在页面顶端的
         tabBarOptions: {
@@ -62,10 +92,6 @@ const App = TabNavigator(
     }
 )
 const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        backgroundColor:'#fff'
-    },
     icon: {
         height: 22,
         width: 22,

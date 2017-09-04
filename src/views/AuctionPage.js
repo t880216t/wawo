@@ -6,17 +6,15 @@ import {
     View
 } from 'react-native';
 
-export default class Me extends Component {
+export default class AuctionPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Me</Text>
+                <Text>AuctionPage</Text>
             </View>
         );
     }
 }
-
-
 
 const styles = StyleSheet.create({
     container: {

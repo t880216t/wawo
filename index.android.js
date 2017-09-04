@@ -12,7 +12,6 @@ import {
   View
 } from 'react-native';
 import App from './app'
-import SimpleApp from './src/views/HomePage'
 
 export default class wawo extends Component {
   render() {
