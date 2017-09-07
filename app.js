@@ -72,7 +72,7 @@ const App = TabNavigator(
     },{
         initialRouteName: 'HomeTab',
         animationEnabled: false,
-        swipeEnabled: true,
+        swipeEnabled: false,
         tabBarPosition: 'bottom', // 显示在底端，android 默认是显示在页面顶端的
         tabBarOptions: {
             activeTintColor: '#008AC9', // 文字和图片选中颜色
