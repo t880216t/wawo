@@ -135,9 +135,6 @@ const HomePage = StackNavigator({
     initialRouteName: 'home',
     mode: 'card',
     headerMode:'none',
-    navigationOptions: {
-        
-    },
 });
 
 export default HomePage;

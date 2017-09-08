@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 
 import React, { Component } from 'react';
 import {
@@ -29,7 +24,7 @@ export default class HomeCell extends Component {
                     <View style={{flex:2,margin: 10}}>
                         <Image source={{uri:'http://wowdb60static.wow-classic.com/images/icons/medium/inv_misc_monsterclaw_03.png'}}
                                style={{height:60,width: 60}}
-                        ></Image>
+                        />
                     </View>
                     <View style={{flex:7,justifyContent: 'center'}}>
                         <Text style={styles.cell_conntent}>{cellData.city}</Text>
