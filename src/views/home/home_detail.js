@@ -12,8 +12,6 @@ import {
 
 export default class HomeDetail extends Component {
     static navigationOptions = {
-        swipeEnabled:true,
-        animationEnabled:false,
         tabBarVisible:false,
     };
 

@@ -12,12 +12,13 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import {SearchBar} from 'antd-mobile';
 import {StackNavigator} from 'react-navigation';
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator';
 
 //自定义组件
 import HomeCell from './home/home_cell';
 import HomeDetail from './home/home_detail';
+import CoustomButton from '../compment/button'
 
 class _HomePage extends Component {
     // 构造
@@ -72,8 +73,12 @@ class _HomePage extends Component {
                                onChange = {(text) => {this.onChange(text)}}
                                />
                 </View>
-                <View style={{flex:1,marginLeft: 5}}>
-                    <Text style={{color:'white'}}>搜索</Text>
+                <View style={{flex:2}}>
+                    <CoustomButton
+                        normalImage={require('../image/ButtonUp.png')}
+                        selectedImage={require('../image/ButtonDown.png')}
+                        content="搜索"
+                    />
                 </View>
             </View>
 
@@ -85,9 +90,11 @@ class _HomePage extends Component {
         return (
             <View style={styles.container}>
                 <StatusBar backgroundColor='#211510'></StatusBar>
+                <View>
                 <Image
                     style={{height: 50,resizeMode:'cover'}}
-                    source={{uri:'https://www.battlenet.com.cn/wow/static/images/content/table-options-bg.jpg'}}
+                    //source={require('../image/headerBg.png')}
+                    source={{uri:'https://www.wowchina.com/static/components/SiteNav/sitenav-bar-user-bg.jpg'}}
                 >
                 <View style={styles.head}>
 
@@ -105,6 +112,7 @@ class _HomePage extends Component {
 
                 </View>
                 </Image>
+                </View>
                 <Image
                     style={styles.backgroundImage}
                     source={{uri:'https://www.battlenet.com.cn/wow/static/images/profile/sidebar-bg.jpg'}}
@@ -133,8 +141,12 @@ const HomePage = StackNavigator({
 
 },{
     initialRouteName: 'home',
-    mode: 'card',
-    headerMode:'none',
+    mode: 'card ',
+    headerMode: 'none',
+    //解决安卓push无效果
+    transitionConfig:()=>({
+        screenInterpolator:CardStackStyleInterpolator.forHorizontal,
+    })
 });
 
 export default HomePage;
