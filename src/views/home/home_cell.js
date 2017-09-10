@@ -16,6 +16,7 @@ export default class HomeCell extends Component {
     render() {
         let {cellData} = this.props;
         return (
+        <View>
             <TouchableOpacity
                 style={styles.cell_box}
                 onPress={this.props.onSelect}
@@ -31,6 +32,8 @@ export default class HomeCell extends Component {
                     </View>
                 </View>
             </TouchableOpacity>
+            <View style={{height: 1,width: Dimensions.get('window').width,backgroundColor: 'rgba(0,0,0,0.2)'}}></View>
+        </View>
         );
     }
 }
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
     },
     cell_box_box:{
         flexDirection: 'row',
-        backgroundColor:'rgba(0,0,0,0.3)',
+        backgroundColor:'rgba(0,0,0,0)',
         height:78,
         justifyContent: 'center',
     },

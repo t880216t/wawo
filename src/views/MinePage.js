@@ -3,20 +3,30 @@ import {
     AppRegistry,
     StyleSheet,
     Text,
-    View
+    View,
+    Dimensions,
+    ScrollView,
+    Image
 } from 'react-native';
 
 export default class Me extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Me</Text>
-            </View>
+                <ScrollView>
+                    <Image
+                        style={styles.backgroundImage}
+                        source={{uri:'https://www.battlenet.com.cn/wow/static/images/profile/sidebar-bg.jpg'}}
+                    >
+                        <View style={{flex:1,marginLeft:10,justifyContent: 'center',alignItems: 'center'}}>
+                            <Text style={{fontSize:15,color: '#c600ff',}}>
+                                Me
+                            </Text>
+                        </View>
+                    </Image>
+                </ScrollView>
         );
     }
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -24,5 +34,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
+    },
+    backgroundImage:{
+        flex:1,
+        height: Dimensions.get('window').height,
+        resizeMode:'cover'
     },
 })

@@ -101,8 +101,13 @@ class _HomePage extends Component {
                         <View style={styles.titleProfile}>
                             <View style={{flex:1}}>
                                 <Image
-                                    source={{uri:'http://oi2rzqa3e.bkt.clouddn.com/static/images/11-0.gif'}}
-                                    style={styles.AdvImage}/>
+                                    source={{uri:'https://www.battlenet.com.cn/wow/static/images/character/auction/icon-frame.png'}}
+                                    style={styles.AdvImageBox}
+                                >
+                                    <Image
+                                        source={{uri:'http://oi2rzqa3e.bkt.clouddn.com/static/images/11-0.gif'}}
+                                        style={styles.AdvImage}/>
+                                </Image>
                             </View>
                             <View style={styles.titleName}>
                                 <Text style={{color:'#f8b700', fontSize:15}}>未知目标</Text>
@@ -113,10 +118,7 @@ class _HomePage extends Component {
                 </View>
                 </Image>
                 </View>
-                <Image
-                    style={styles.backgroundImage}
-                    source={{uri:'https://www.battlenet.com.cn/wow/static/images/profile/sidebar-bg.jpg'}}
-                >
+                <View style={{backgroundColor: '#211510'}}>
                     <FlatList style={{width:Dimensions.get('window').width}}
                               data = {this.state.NumberArr}
                               renderItem={({item}) => this.renderItemView(item,navigate)}
@@ -125,7 +127,7 @@ class _HomePage extends Component {
                     >
 
                     </FlatList>
-                </Image>
+                </View>
 
             </View>
         );
@@ -169,13 +171,23 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         height:50,
     },
+    AdvImageBox:{
+        flex:1,
+        width:45,
+        height:45,
+        marginLeft:30,
+        marginTop:2,
+        marginBottom:2,
+        borderRadius:5,
+        justifyContent:'center',
+        alignItems:'center'
+    },
     AdvImage:{
         flex:1,
-        width:40,
-        height:40,
-        marginLeft:30,
-        marginTop:5,
-        marginBottom:5,
+        width:38,
+        height:38,
+        marginTop: 3,
+        marginBottom: 3,
         borderRadius:5
     },
     titleName:{
