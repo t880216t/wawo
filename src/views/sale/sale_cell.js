@@ -42,12 +42,16 @@ const styles = StyleSheet.create({
     cell_box:{
         flex:1,
         height:80,
+        justifyContent: 'center',
+        alignItems:'center'
     },
     cell_box_box:{
+        marginLeft: 5,
+        marginRight: 5,
         flexDirection: 'row',
-        backgroundColor:'rgba(0,0,0,0)',
+        backgroundColor:'rgba(0,0,0,0.3)',
         height:78,
-        justifyContent: 'center',
+        borderRadius:5
     },
     cell_conntent:{
         fontSize: 15,

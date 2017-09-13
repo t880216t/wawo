@@ -47,6 +47,15 @@ class _SalePage extends Component {
     render() {
         //导航对象
         const { navigate } = this.props.navigation;
+
+        const AddCell =
+            <TouchableOpacity style={{marginTop: 10,height: 90,width: Dimensions.get('window').width,}}
+                              onPress={() => navigate('add')}
+            >
+                <View style={{flex:1,margin: 5,borderRadius: 8,backgroundColor: 'rgba(0,0,0,0.3)',justifyContent: 'center',alignItems: 'center'}}>
+                    <Image source={require('../image/add.png')} style={{height: 50,width: 50}}></Image>
+                </View>
+            </TouchableOpacity>
         
         return (
                 <ScrollView>
@@ -59,6 +68,8 @@ class _SalePage extends Component {
                                       data = {this.state.NumberArr}
                                       renderItem={({item}) => this.renderItemView(item,navigate)}
                                       keyExtractor = {this.extraUniqueKey}//去除警告
+                                        ListHeaderComponent = {AddCell}
+
                             >
 
                             </FlatList>
