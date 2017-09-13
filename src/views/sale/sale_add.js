@@ -7,7 +7,8 @@ import {
     Dimensions,
     ScrollView,
     TouchableOpacity,
-    Image
+    Image,
+    TextInput
 } from 'react-native';
 
 export default class SaleAdd extends Component {
@@ -23,8 +24,25 @@ export default class SaleAdd extends Component {
                         style={styles.backgroundImage}
                         source={{uri:'https://www.battlenet.com.cn/wow/static/images/profile/sidebar-bg.jpg'}}
                     >
-                            <View style={{flex:1,margin: 8,borderRadius: 8,backgroundColor: 'rgba(0,0,0,0.3)',justifyContent: 'center',alignItems: 'center'}}>
-                                <Image source={require('../../image/add.png')} style={{height: 50,width: 50}}></Image>
+                            <View style={{flex:1,margin: 8,borderRadius: 8,backgroundColor: 'rgba(0,0,0,0.3)'}}>
+                                <View style={{margin: 10,flexDirection: 'row'}}>
+                                    <View style={{flex:2}}>
+                                        <Image source={require('../../image/Empty.png')} style={{height: 90,width: 90}}></Image>
+                                    </View>
+                                    <View style={{flex:5,justifyContent:'center'}}>
+                                        <TextInput style={{height: 40,backgroundColor: 'black',borderRadius:5,color: 'white'}}
+                                                   underlineColorAndroid='transparent'
+                                                   keyboardType='default'
+                                                   numberOfLines={2}
+                                                   disableFullscreenUI={false}
+                                                   placeholder="物品名称"
+                                                   placeholderTextColor="grey"
+                                                   maxLength={16}
+                                                   clearButtonMode="while-editing"
+                                        />
+                                    </View>
+                                </View>
+
                             </View>
                     </Image>
                 </ScrollView>
