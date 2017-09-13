@@ -30,7 +30,7 @@ export default class SaleDetail extends Component {
                         </View>
                     </Image>
                 </ScrollView>
-                <View style={{flex: 1,top: -50, alignSelf: 'flex-start', justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{flex: 1,top: -50, alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center'}}>
                     <TouchableOpacity style={{ width: 50, height: 50, borderRadius: 25, justifyContent: 'center', alignItems: 'center', margin: 20}} onPress={()=>{this.props.navigation.goBack()}}  >
                         <Image source={require('../../image/back.png')} style={{height:35,width:35}}></Image>
                     </TouchableOpacity>
