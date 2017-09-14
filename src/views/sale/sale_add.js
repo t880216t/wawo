@@ -11,6 +11,9 @@ import {
     TextInput
 } from 'react-native';
 
+//下拉框控件
+import ModalDropdown from 'react-native-modal-dropdown';
+
 export default class SaleAdd extends Component {
     static navigationOptions = {
         tabBarVisible:false,
@@ -39,6 +42,18 @@ export default class SaleAdd extends Component {
                                                    placeholderTextColor="grey"
                                                    maxLength={16}
                                                    clearButtonMode="while-editing"
+                                        />
+                                    </View>
+                                </View>
+                                <View style={{margin: 10,height:40,alignItems:'center',flexDirection: 'row',backgroundColor: 'rgba(0,0,0,0.3)'}}>
+                                    <View style={{marginLeft: 15}}>
+                                        <Text style={{color:'#a1a1a1',fontSize: 15}}>物品成色:</Text>
+                                    </View>
+                                    <View style={{marginLeft: 30}}>
+                                        <ModalDropdown
+                                            options={['全新', '九成新', '八成新', '七成新', '六成新']}
+                                            textStyle={{color:'#fff',fontSize: 14}}
+                                            defaultValue="请选择"
                                         />
                                     </View>
                                 </View>
