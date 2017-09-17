@@ -38,26 +38,70 @@ export default class SaleAdd extends Component {
                                                    keyboardType='default'
                                                    numberOfLines={2}
                                                    disableFullscreenUI={false}
-                                                   placeholder="物品名称"
+                                                   placeholder="请输入物品名称"
                                                    placeholderTextColor="grey"
                                                    maxLength={16}
                                                    clearButtonMode="while-editing"
                                         />
                                     </View>
                                 </View>
-                                <View style={{margin: 10,height:40,alignItems:'center',flexDirection: 'row',backgroundColor: 'rgba(0,0,0,0.3)'}}>
-                                    <View style={{marginLeft: 15}}>
-                                        <Text style={{color:'#a1a1a1',fontSize: 15}}>物品成色:</Text>
+                                <View style={{marginLeft:10,flexDirection: 'column',backgroundColor: 'rgba(0,0,0,0)'}}>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <View style={{marginLeft: 15,flex:2,justifyContent:'center'}}>
+                                            <Text style={{color:'#c09a67',fontSize: 15}}>出售价格:</Text>
+                                        </View>
+                                        <View style={{marginLeft: 15,borderRadius: 3,justifyContent:'center',flex:7,marginRight: 10}}>
+                                            <TextInput style={{backgroundColor: 'black',borderRadius:5,color: 'black',height:40,color: 'white'}}
+                                                       underlineColorAndroid='transparent'
+                                                       keyboardType='numeric'
+                                                       numberOfLines={1}
+                                                       disableFullscreenUI={false}
+                                                       placeholder="请输入物品转手价格"
+                                                       placeholderTextColor="grey"
+                                                       maxLength={11}
+                                                       clearButtonMode="while-editing"
+                                            />
+                                        </View>
                                     </View>
-                                    <View style={{marginLeft: 30}}>
-                                        <ModalDropdown
-                                            options={['全新', '九成新', '八成新', '七成新', '六成新']}
-                                            textStyle={{color:'#fff',fontSize: 14}}
-                                            defaultValue="请选择"
-                                        />
+                                    <View style={{flexDirection: 'row',marginTop:10}}>
+                                        <View style={{marginLeft: 15,justifyContent:'center'}}>
+                                            <Text style={{color:'#c09a67',fontSize: 15}}>物品成色:</Text>
+                                        </View>
+                                        <View style={{marginLeft: 15,height:40,justifyContent:'center',padding: 5,backgroundColor: 'black',borderRadius: 3,flexDirection:'row'}}>
+                                            <ModalDropdown
+                                                options={['全    新', '九成新', '八成新', '七成新', '六成新']}
+                                                textStyle={{fontSize: 15,color: 'white'}}
+                                                style={{backgroundColor: 'black',borderRadius: 3,justifyContent:'center'}}
+                                                dropdownStyle={{borderRadius: 3}}
+                                                dropdownTextStyle={{fontSize:14,backgroundColor:'black'}}
+                                                defaultValue="请选择"
+
+                                            />
+                                            <Image
+                                                source={{uri:'http://wowdb60static.wow-classic.com/assets/drop-0a71ed0288bbd1c8e5386e36cef679e291c22feb5204c0677b1e704db695411e.png'}}
+                                                style={{height: 12,width: 16,alignSelf: 'center',}}
+                                            ></Image>
+                                        </View>
+                                    </View>
+                                    <View style={{flexDirection: 'column',marginTop:10}}>
+                                        <View style={{marginLeft: 15,justifyContent:'center'}}>
+                                            <Text style={{color:'#c09a67',fontSize: 15}}>物品描述:</Text>
+                                        </View>
+                                        <View style={{marginLeft: 15,borderRadius: 3,justifyContent:'flex-start',marginRight: 10}}>
+                                            <TextInput style={{backgroundColor: 'black',marginTop:10,borderRadius:5,color: 'black',height:100,color: 'white',justifyContent:'flex-start'}}
+                                                       underlineColorAndroid='transparent'
+                                                       keyboardType='numbers-and-punctuation'
+                                                       multiline={true}
+                                                       disableFullscreenUI={false}
+                                                       textAlignVertical ='top'
+                                                       placeholder="请输入物品的描述信息"
+                                                       placeholderTextColor="grey"
+                                                       maxLength={500}
+                                                       clearButtonMode="while-editing"
+                                            />
+                                        </View>
                                     </View>
                                 </View>
-
                             </View>
                     </Image>
                 </ScrollView>
