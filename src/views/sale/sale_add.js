@@ -13,11 +13,36 @@ import {
 
 //下拉框控件
 import ModalDropdown from 'react-native-modal-dropdown';
+//照片组件
+import ImagePicker from 'react-native-image-crop-picker';
 
 export default class SaleAdd extends Component {
     static navigationOptions = {
         tabBarVisible:false,
     };
+
+    // 构造
+      constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            imageUrl:''
+        };
+      }
+
+    _openPicker(){
+        ImagePicker.openPicker({
+            width: 400,
+            height: 400,
+            cropping: false
+        }).then(image => {
+            this.setState({
+                imageUrl: image['path']
+            })
+        }).catch(error  => {
+            console.log('There has been a problem with your fetch operation: '+ error.message);
+        });
+    }
 
     render() {
         return (
@@ -65,7 +90,7 @@ export default class SaleAdd extends Component {
                                     </View>
                                     <View style={{flexDirection: 'row',marginTop:10}}>
                                         <View style={{marginLeft: 15,justifyContent:'center'}}>
-                                            <Text style={{color:'#c09a67',fontSize: 15}}>物品成色:</Text>
+                                            <Text style={{color:'#c09a67',fontSize: 15,alignItems: 'flex-end'}}>        成色:</Text>
                                         </View>
                                         <View style={{marginLeft: 15,height:40,justifyContent:'center',padding: 5,backgroundColor: 'black',borderRadius: 3,flexDirection:'row'}}>
                                             <ModalDropdown
@@ -83,12 +108,12 @@ export default class SaleAdd extends Component {
                                             ></Image>
                                         </View>
                                     </View>
-                                    <View style={{flexDirection: 'column',marginTop:10}}>
-                                        <View style={{marginLeft: 15,justifyContent:'center'}}>
+                                    <View style={{flexDirection: 'row',marginTop:10}}>
+                                        <View style={{marginLeft: 15,justifyContent:'flex-start',flex:2}}>
                                             <Text style={{color:'#c09a67',fontSize: 15}}>物品描述:</Text>
                                         </View>
-                                        <View style={{marginLeft: 15,borderRadius: 3,justifyContent:'flex-start',marginRight: 10}}>
-                                            <TextInput style={{backgroundColor: 'black',marginTop:10,borderRadius:5,color: 'black',height:100,color: 'white',justifyContent:'flex-start'}}
+                                        <View style={{borderRadius: 3,justifyContent:'flex-start',marginRight: 10,flex:6}}>
+                                            <TextInput style={{backgroundColor: 'black',borderRadius:5,minHeight:100,color: '#1EFF00'}}
                                                        underlineColorAndroid='transparent'
                                                        keyboardType='numbers-and-punctuation'
                                                        multiline={true}
@@ -101,7 +126,31 @@ export default class SaleAdd extends Component {
                                             />
                                         </View>
                                     </View>
+                                    <View style={{flex:1,margin: 10}}>
+                                        <Text style={{color:'#c09a67',fontSize: 15,marginTop: 10,marginLeft: 5}}>添加图片:</Text>
+
+                                        <View style={{marginTop: 10,alignItems: 'center', justifyContent: 'center',backgroundColor: 'black',}}>
+                                            <Image
+                                                style={{width: 320, height: 320,marginTop: 5}}
+                                                source={{uri:this.state.imageUrl}}></Image>
+                                            <Image
+                                                style={{width: 320, height: 320,marginTop: 5}}
+                                                source={{uri:this.state.imageUrl}}></Image>
+                                            <Image
+                                                style={{width: 320, height: 320,marginTop: 5}}
+                                                source={{uri:this.state.imageUrl}}></Image>
+                                        </View>
+                                        <TouchableOpacity style={{alignItems:'center',height: 200,justifyContent:'center'}}
+                                                          onPress={this._openPicker.bind(this)}>
+                                            <Image source={require('../../image/addImage.png')} style={{height: 50,width: 50}}></Image>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
+                                <TouchableOpacity style={{justifyContent:'center',flex:1,alignItems: 'center',margin: 10}}>
+                                    <Image source={require('../../image/_button.png')} style={{marginLeft: 10,marginRight: 10,height: 50,borderRadius: 5,justifyContent: 'center'}}>
+                                        <Text style={{color:'#ffae00',fontSize: 18,textAlign: 'center'}}>提交</Text>
+                                    </Image>
+                                </TouchableOpacity>
                             </View>
                     </Image>
                 </ScrollView>
@@ -124,7 +173,7 @@ const styles = StyleSheet.create({
     },
     backgroundImage:{
         flex:1,
-        height: Dimensions.get('window').height,
+        minHeight: Dimensions.get('window').height,
         resizeMode:'cover'
     },
 })
