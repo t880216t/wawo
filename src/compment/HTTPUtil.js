@@ -70,4 +70,34 @@ HTTPUtil.post = function(url, formData, headers) {
     })
 }
 
+/**
+ * 上传图片
+ */
+
+HTTPUtil.uploadImage =(url, params)=> {
+    return new Promise(function (resolve, reject) {
+        var ary = params.path.split('/');
+        //设置formData数据
+        let formData = new FormData();
+        let file = {uri: params.path, type: "multipart/form-data", name: ary[ary.length-1]};
+        formData.append("file", file);
+        //fetch post请求
+        fetch(url, {
+            method: "POST",
+            //设置请求头，请求体为json格式，identity为未压缩
+            headers: {
+            },
+            body: formData,
+        }).then((response) => response.json())
+            .then((responseData)=> {
+                console.log("uploadImage", responseData);
+                resolve(responseData);
+            })
+            .catch((err)=> {
+                console.log("err", err);
+                reject(err);
+            });
+    });
+};
+
 export default HTTPUtil;  

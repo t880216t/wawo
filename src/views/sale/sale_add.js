@@ -18,6 +18,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import HTTPUtil from '../../compment/HTTPUtil';
 
 var ims = [];
+var RealIms = [];
+//var BASEHOST = 'http://ownerworld.win:5000/'
+var BASEHOST = 'http://192.168.2.104:5000/'
 
 export default class SaleAdd extends Component {
     static navigationOptions = {
@@ -30,7 +33,9 @@ export default class SaleAdd extends Component {
         // 初始状态
         this.state = {
             imageUrls:[],
+            realImageUrls:[],
             titleImage:'',
+            realTitleImage:'',
             titleContent:'',
             price:0,
             condition:10,
@@ -95,15 +100,70 @@ export default class SaleAdd extends Component {
         //
         // })
 
-        HTTPUtil.get('https://www.baidu.com/','','')
-            .then((json) => {
-                if(json.code ===0){
-                    console.log('this:',json)
+        var index = 1
+
+        //上传头像图标
+        HTTPUtil.uploadImage(BASEHOST+'upload',{'path':this.state.titleImage,})
+            .then((responseData) =>{
+                if(responseData.code === 0){
+                    this.setState({
+                        realTitleImage:responseData.url
+                    },()=>{
+                        //上传描述图片
+                        this.state.imageUrls.map((imageUrl)=>(
+                            HTTPUtil.uploadImage(BASEHOST+'upload',{'path':imageUrl,})
+                                .then((responseData) =>{
+                                    if(responseData.code === 0){
+                                        RealIms.push(responseData.url)
+                                        this.setState({
+                                            realImageUrls:RealIms
+                                        },()=>{
+                                            if (index === this.state.imageUrls.length){
+                                                //全部信息
+                                                let formData = new FormData();
+                                                formData.append("titleContent",this.state.titleContent)
+                                                formData.append("titleImage",this.state.realTitleImage)
+                                                formData.append("price",this.state.price)
+                                                formData.append("condition",this.state.condition)
+                                                formData.append("desc",this.state.desc)
+                                                formData.append("imageUrls",this.state.realImageUrls)
+                                                formData.append("userId",0)
+                                                HTTPUtil.post(BASEHOST+'/addProd',formData,'')
+                                                    .then((json) => {
+                                                        //处理 请求success
+                                                        if(json.code === 0 ){
+                                                            //我们假设业务定义code为0时，数据正常
+                                                            console.log(responseData.msg)
+                                                        }else{
+                                                            //处理自定义异常
+                                                            console.log(responseData.msg)
+                                                        }
+                                                    },(err)=>{
+                                                        //TODO 处理请求fail
+                                                        console.log(err)
+
+                                                    })
+                                            }else {
+                                                console.log('上传完成:',index+'/'+this.state.imageUrls.length)
+                                                index += 1
+                                            }
+
+                                        })
+                                    }else {
+                                        console.log(responseData.msg,imageUrl)
+                                    }
+                                },(err)=>{
+                                    console.log('请求就挂了!',err)
+                                })
+                        ))
+                    })
                 }else {
-                    console.log('this faile 1',json)
-                }},(json)=>{
-                    console.log('this faile 2',json)
+                    console.log(responseData.msg,this.state.titleImage)
+                }
+            },(err)=>{
+                console.log('请求就挂了!',err)
             })
+
     }
 
     render() {
