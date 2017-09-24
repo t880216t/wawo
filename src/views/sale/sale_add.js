@@ -15,6 +15,7 @@ import {
 import ModalDropdown from 'react-native-modal-dropdown';
 //照片组件
 import ImagePicker from 'react-native-image-crop-picker';
+import HTTPUtil from '../../compment/HTTPUtil';
 
 var ims = [];
 
@@ -78,7 +79,31 @@ export default class SaleAdd extends Component {
 
     //提交数据
     submit(){
-        console.log('all:',this.state)
+        // let formData = new FormData();
+        // formData.append("id",1060);
+        //
+        // HTTPUtil.post(url,formData,headers).then((json) => {
+        //     //处理 请求success
+        //     if(json.code === 0 ){
+        //         //我们假设业务定义code为0时，数据正常
+        //     }else{
+        //         //处理自定义异常
+        //         this.doException(json);
+        //     }
+        // },(json)=>{
+        //     //TODO 处理请求fail
+        //
+        // })
+
+        HTTPUtil.get('https://www.baidu.com/','','')
+            .then((json) => {
+                if(json.code ===0){
+                    console.log('this:',json)
+                }else {
+                    console.log('this faile 1',json)
+                }},(json)=>{
+                    console.log('this faile 2',json)
+            })
     }
 
     render() {
