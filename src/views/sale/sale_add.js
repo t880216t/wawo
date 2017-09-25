@@ -16,11 +16,12 @@ import ModalDropdown from 'react-native-modal-dropdown';
 //照片组件
 import ImagePicker from 'react-native-image-crop-picker';
 import HTTPUtil from '../../compment/HTTPUtil';
+import ProgressBarDialog from '../../compment/progressBarDialog'
 
 var ims = [];
 var RealIms = [];
 //var BASEHOST = 'http://ownerworld.win:5000/'
-var BASEHOST = 'http://192.168.2.104:5000/'
+var BASEHOST = 'http://192.168.1.101:5000/'
 
 export default class SaleAdd extends Component {
     static navigationOptions = {
@@ -39,9 +40,53 @@ export default class SaleAdd extends Component {
             titleContent:'',
             price:0,
             condition:10,
-            desc:''
+            desc:'',
+            progress: 0,
+            progressModalVisible: false
         };
       }
+
+    componentWillUnmount(){
+        ims = []
+        RealIms =[]
+        // ImagePicker.clean().then(() => {
+        //     console.log('removed all tmp images from tmp directory');
+        // }).catch(e => {
+        //     alert(e);
+        // });
+
+    }
+
+    refProgressBar = (view) => {
+        this.progressBar = view;
+    }
+
+    showProgressBar = () => {
+        this.setState({
+            progressModalVisible: true
+        });
+    }
+
+    dismissProgressBar = () => {
+        this.setState({
+            progress: 0,
+            progressModalVisible: false
+        });
+    }
+
+    setProgressValue = (progress) => {
+        this.setState({
+            progress
+        });
+    }
+
+    onProgressRequestClose = () => {
+        this.dismissProgressBar();
+    }
+
+    canclePress = () => {
+        this.dismissProgressBar();
+    }
 
     _openPicker(){
         ImagePicker.openPicker({
@@ -101,6 +146,7 @@ export default class SaleAdd extends Component {
         // })
 
         var index = 1
+        this.showProgressBar()
 
         //上传头像图标
         HTTPUtil.uploadImage(BASEHOST+'upload',{'path':this.state.titleImage,})
@@ -120,23 +166,27 @@ export default class SaleAdd extends Component {
                                         },()=>{
                                             if (index === this.state.imageUrls.length){
                                                 //全部信息
+                                                _realImageUrls = this.state.realImageUrls.join(",")
                                                 let formData = new FormData();
                                                 formData.append("titleContent",this.state.titleContent)
                                                 formData.append("titleImage",this.state.realTitleImage)
                                                 formData.append("price",this.state.price)
                                                 formData.append("condition",this.state.condition)
                                                 formData.append("desc",this.state.desc)
-                                                formData.append("imageUrls",this.state.realImageUrls)
+                                                formData.append("imageUrls",_realImageUrls)
                                                 formData.append("userId",0)
-                                                HTTPUtil.post(BASEHOST+'/addProd',formData,'')
+                                                HTTPUtil.post(BASEHOST+'addProd',formData,'')
                                                     .then((json) => {
                                                         //处理 请求success
                                                         if(json.code === 0 ){
                                                             //我们假设业务定义code为0时，数据正常
-                                                            console.log(responseData.msg)
+                                                            this.setProgressValue(100)
+                                                            this.dismissProgressBar()
+                                                            this.props.navigation.goBack()
                                                         }else{
                                                             //处理自定义异常
-                                                            console.log(responseData.msg)
+                                                            this.dismissProgressBar()
+                                                            console.log(json.msg)
                                                         }
                                                     },(err)=>{
                                                         //TODO 处理请求fail
@@ -144,24 +194,29 @@ export default class SaleAdd extends Component {
 
                                                     })
                                             }else {
-                                                console.log('上传完成:',index+'/'+this.state.imageUrls.length)
+                                                var processNum = Math.round((index / this.state.imageUrls.length)*100);
+                                                this.setProgressValue(processNum)
                                                 index += 1
                                             }
 
                                         })
                                     }else {
                                         console.log(responseData.msg,imageUrl)
+                                        this.dismissProgressBar()
                                     }
                                 },(err)=>{
                                     console.log('请求就挂了!',err)
+                                    this.dismissProgressBar()
                                 })
                         ))
                     })
                 }else {
                     console.log(responseData.msg,this.state.titleImage)
+                    this.dismissProgressBar()
                 }
             },(err)=>{
                 console.log('请求就挂了!',err)
+                this.dismissProgressBar()
             })
 
     }
@@ -289,6 +344,16 @@ export default class SaleAdd extends Component {
                     <TouchableOpacity style={{ width: 50, height: 50, borderRadius: 25, justifyContent: 'center', alignItems: 'center', margin: 20}} onPress={()=>{this.props.navigation.goBack()}}  >
                         <Image source={require('../../image/back.png')} style={{height:35,width:35}}></Image>
                     </TouchableOpacity>
+                </View>
+                <View>
+                    <ProgressBarDialog
+                        ref={this.refProgressBar}
+                        progress={this.state.progress}
+                        progressModalVisible={this.state.progressModalVisible}
+                        onRequestClose={this.onProgressRequestClose}
+                        canclePress={this.canclePress}
+                        needCancle={false}
+                    />
                 </View>
             </View>
         );

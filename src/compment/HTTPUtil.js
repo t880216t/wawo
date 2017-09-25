@@ -49,6 +49,7 @@ HTTPUtil.get = function(url, params, headers) {
  */
 HTTPUtil.post = function(url, formData, headers) {
     return new Promise(function (resolve, reject) {
+        console.log('formdata:',formData)
         fetch(url, {
             method: 'POST',
             headers: headers,
