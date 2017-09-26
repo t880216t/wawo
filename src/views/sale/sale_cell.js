@@ -22,13 +22,15 @@ export default class SaleCell extends Component {
                     onPress={this.props.onSelect}
                 >
                     <View style={styles.cell_box_box}>
-                        <View style={{flex:2,margin: 10}}>
-                            <Image source={{uri:'http://wowdb60static.wow-classic.com/images/icons/medium/inv_misc_monsterclaw_03.png'}}
-                                   style={{height:60,width: 60}}
-                            />
+                        <View style={{flex:2}}>
+                            <Image source={require('../../image/Empty.png')} style={{height: 90,width: 90,justifyContent: 'center',alignItems: 'center'}}>
+                                <Image source={{uri:cellData.titleImage}}
+                                       style={{height:53,width: 53,borderRadius: 5,marginRight:1,marginBottom: 1}}
+                                />
+                            </Image>
                         </View>
                         <View style={{flex:7,justifyContent: 'center'}}>
-                            <Text style={styles.cell_conntent}>{cellData.city}</Text>
+                            <Text style={styles.cell_conntent}>{cellData.title}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -41,7 +43,7 @@ export default class SaleCell extends Component {
 const styles = StyleSheet.create({
     cell_box:{
         flex:1,
-        height:80,
+        height:95,
         justifyContent: 'center',
         alignItems:'center'
     },
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
         flexDirection: 'row',
         backgroundColor:'rgba(0,0,0,0.3)',
-        height:78,
+        height:93,
         borderRadius:5
     },
     cell_conntent:{

@@ -47,8 +47,8 @@ export default class SaleAdd extends Component {
       }
 
     componentWillUnmount(){
-        ims = []
-        RealIms =[]
+        console.log('add page componentWillUnmount')
+
         // ImagePicker.clean().then(() => {
         //     console.log('removed all tmp images from tmp directory');
         // }).catch(e => {
@@ -182,7 +182,11 @@ export default class SaleAdd extends Component {
                                                             //我们假设业务定义code为0时，数据正常
                                                             this.setProgressValue(100)
                                                             this.dismissProgressBar()
-                                                            this.props.navigation.goBack()
+                                                            ims = []
+                                                            RealIms =[]
+                                                            //this.props.navigation.goBack()
+                                                            this.props.navigation.navigate('home',{info:formData})
+
                                                         }else{
                                                             //处理自定义异常
                                                             this.dismissProgressBar()
