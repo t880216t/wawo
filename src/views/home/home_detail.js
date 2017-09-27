@@ -18,7 +18,6 @@ export default class HomeDetail extends Component {
     render() {
         var {params} = this.props.navigation.state;
         var {item} = params.cellData;
-        console.log (params.cellData)
         return (
             <View>
                 <ScrollView>
@@ -28,7 +27,7 @@ export default class HomeDetail extends Component {
                     >
                         <View style={{flex:1,marginLeft:10,justifyContent: 'center',alignItems: 'center'}}>
                             <Text style={{fontSize:15,color: '#c600ff',}}>
-                                {item.city}
+                                {item.title}
                             </Text>
                         </View>
                     </Image>

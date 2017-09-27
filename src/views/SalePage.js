@@ -50,9 +50,10 @@ class _SalePage extends Component {
             .then((json) => {
                 //处理 请求success
                     //我们假设业务定义code为0时，数据正常
-                    this.setState({
-                        value : json
-                    })
+                console.log(json)
+                this.setState({
+                    value : json
+                })
 
             },(err)=>{
                 //TODO 处理请求fail

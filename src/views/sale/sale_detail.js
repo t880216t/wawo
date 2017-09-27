@@ -17,7 +17,7 @@ export default class SaleDetail extends Component {
 
     render() {
         const {params} = this.props.navigation.state;
-        const cellData = params.cellData;
+        const {item} = params.cellData;
         return (
             <View>
                 <ScrollView>
@@ -27,7 +27,7 @@ export default class SaleDetail extends Component {
                     >
                         <View style={{flex:1,marginLeft:10,justifyContent: 'center',alignItems: 'center'}}>
                             <Text style={{fontSize:15,color: '#c600ff',}}>
-                                {cellData.item.title}
+                                {item.title}
                             </Text>
                         </View>
                     </Image>

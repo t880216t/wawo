@@ -16,24 +16,39 @@ export default class HomeCell extends Component {
     render() {
         let {cellData} = this.props;
         return (
-        <View>
-            <TouchableOpacity
-                style={styles.cell_box}
-                onPress={this.props.onSelect}
-            >
-                <View style={styles.cell_box_box}>
-                    <View style={{flex:2,margin: 10}}>
-                        <Image source={{uri:'http://wowdb60static.wow-classic.com/images/icons/medium/inv_misc_monsterclaw_03.png'}}
-                               style={{height:60,width: 60}}
-                        />
+            <View>
+                <TouchableOpacity
+                    style={styles.cell_box}
+                    onPress={this.props.onSelect}
+                >
+                    <View style={styles.cell_box_box}>
+                        <View style={{flex:2}}>
+                            <Image source={require('../../image/Empty.png')} style={{height: 90,width: 90,justifyContent: 'center',alignItems: 'center'}}>
+                                <Image source={{uri:cellData.titleImage}}
+                                       style={{height:53,width: 53,borderRadius: 5,marginRight:1,marginBottom: 1}}
+                                />
+                            </Image>
+                        </View>
+                        <View style={{flex:7,justifyContent: 'center'}}>
+                            <View style={{marginLeft: 10,flex:1,flexDirection: 'column'}}>
+                                <Text style={styles.cell_conntent}>{cellData.title}</Text>
+                                <View style={styles.cell_more}>
+                                    <Text style={styles.cell_price}>¥ <Text >{cellData.price}</Text></Text>
+                                    <TouchableOpacity style={{flex:3,alignItems:'flex-end',marginRight: 10}}
+                                                      onPress={this.props.onSelect}
+                                    >
+                                        <Image source={require('../../image/normal.png')} style={{height:25,width: 100,justifyContent:'center',alignItems: 'center'}}
+                                               resizeMode="stretch">
+                                            <Text style={{color:'#ffb100'}}>一口价</Text>
+                                        </Image>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
                     </View>
-                    <View style={{flex:7,justifyContent: 'center'}}>
-                        <Text style={styles.cell_conntent}>{cellData.city}</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-            <View style={{height: 1,width: Dimensions.get('window').width,backgroundColor: 'rgba(0,0,0,0.2)'}}></View>
-        </View>
+                </TouchableOpacity>
+                <View style={{height: 1,width: Dimensions.get('window').width,backgroundColor: 'rgba(0,0,0,0.2)'}}></View>
+            </View>
         );
     }
 }
@@ -41,7 +56,7 @@ export default class HomeCell extends Component {
 const styles = StyleSheet.create({
     cell_box:{
         flex:1,
-        height:80,
+        height:95,
         justifyContent: 'center',
         alignItems:'center'
     },
@@ -50,11 +65,21 @@ const styles = StyleSheet.create({
         marginRight: 5,
         flexDirection: 'row',
         backgroundColor:'rgba(0,0,0,0.3)',
-        height:78,
+        height:93,
         borderRadius:5
     },
     cell_conntent:{
+        flex:2,
         fontSize: 15,
-        color:'#c600ff'
+        color:'#c600ff',
+        marginTop:10
     },
+    cell_price:{
+        flex:2,
+        color:'#c28a13',
+    },
+    cell_more:{
+        flex:2,
+        flexDirection:'row'
+    }
 })

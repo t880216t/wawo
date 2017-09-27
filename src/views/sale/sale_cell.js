@@ -30,7 +30,15 @@ export default class SaleCell extends Component {
                             </Image>
                         </View>
                         <View style={{flex:7,justifyContent: 'center'}}>
-                            <Text style={styles.cell_conntent}>{cellData.title}</Text>
+                            <View style={{marginLeft: 10,flex:1,flexDirection: 'column'}}>
+                                <Text style={styles.cell_conntent}>{cellData.title}</Text>
+                                <View style={styles.cell_more}>
+                                    <Text style={styles.cell_price}>¥ <Text >{cellData.price}</Text></Text>
+                                    <View style={{flex:3,alignItems:'flex-end',marginRight: 20}}>
+                                        <Text style={{color:'#efc9a0'}}>正在出售</Text>
+                                    </View>
+                                </View>
+                            </View>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -56,7 +64,17 @@ const styles = StyleSheet.create({
         borderRadius:5
     },
     cell_conntent:{
+        flex:2,
         fontSize: 15,
-        color:'#c600ff'
+        color:'#c600ff',
+        marginTop:10
     },
+    cell_price:{
+        flex:2,
+        color:'#c28a13',
+    },
+    cell_more:{
+        flex:2,
+        flexDirection:'row'
+    }
 })
