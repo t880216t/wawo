@@ -48,8 +48,8 @@ class _HomePage extends Component {
     //获取列表数据
     getmylist(){
         let formData = new FormData();
-        formData.append("userID",'0')
-        HTTPUtil.post(BASEHOST+'getmyprodlist',formData,'')
+        formData.append("prodName",'')
+        HTTPUtil.post(BASEHOST+'getprodlist',formData,'')
             .then((json) => {
                 //处理 请求success
                 //我们假设业务定义code为0时，数据正常

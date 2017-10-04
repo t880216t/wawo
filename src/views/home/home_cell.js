@@ -18,7 +18,6 @@ export default class HomeCell extends Component {
         formatTime = (new Date(prodTime));
         currentTime = (new Date());
         var diffTime = ((currentTime - formatTime) / (24 * 3600 * 1000)).toFixed(1)
-        console.log('this difftime :',diffTime)
         if(diffTime >= 15){
             return <Image source={{uri:'https://www.battlenet.com.cn/wow/static/images/character/auction/time-verylong.png'}} style={{height:20,width: 20}}></Image>
         }if(diffTime >= 10){
