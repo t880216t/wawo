@@ -8,7 +8,10 @@ import {
     ScrollView,
     TouchableOpacity,
     Image,
-    TextInput
+    TextInput,
+    Alert,
+    BackHandler,
+    ToastAndroid
 } from 'react-native';
 
 //下拉框控件
@@ -20,8 +23,8 @@ import ProgressBarDialog from '../../compment/progressBarDialog'
 
 var ims = [];
 var RealIms = [];
-//var BASEHOST = 'http://ownerworld.win:5000/'
-var BASEHOST = 'http://192.168.1.101:5000/'
+//var BASEHOST = 'http://192.168.1.101:5000/'
+var BASEHOST = 'http://ownerworld.win:5000/'
 
 export default class SaleAdd extends Component {
     static navigationOptions = {
@@ -46,15 +49,17 @@ export default class SaleAdd extends Component {
         };
       }
 
-    componentWillUnmount(){
-        console.log('add page componentWillUnmount')
-
-        // ImagePicker.clean().then(() => {
-        //     console.log('removed all tmp images from tmp directory');
-        // }).catch(e => {
-        //     alert(e);
-        // });
-
+    componentDidMount(){
+        var count=1;
+        BackHandler.addEventListener('hardwareBackPress',function(){
+            if(count==1){
+                ToastAndroid.show('再按一次退出保存',ToastAndroid.SHORT);
+                count--;
+                return true;
+            }else{
+                return false;
+            }
+        });
     }
 
     refProgressBar = (view) => {
@@ -125,6 +130,26 @@ export default class SaleAdd extends Component {
                 <Image style={{width: 320, height: 320,marginTop: 5}} source={{uri:imageUrl}} key={imageUrl}></Image>
             ))
         )
+    }
+
+    //返回确认
+    onPressBack(){
+        if(this.state.titleContent != ''){
+            Alert.alert('温馨提醒','确定不提交，并退出吗?',[
+
+                {text:'取消'},
+
+                {text:'确定',onPress:()=>{
+                    ims = [];
+                    RealIms = []
+                    this.props.navigation.goBack()
+                }
+                }
+            ])
+        }else {
+            this.props.navigation.goBack()
+        }
+
     }
 
     //提交数据
@@ -345,7 +370,7 @@ export default class SaleAdd extends Component {
                     </Image>
                 </ScrollView>
                 <View style={{flex: 1,top: -50, alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center'}}>
-                    <TouchableOpacity style={{ width: 50, height: 50, borderRadius: 25, justifyContent: 'center', alignItems: 'center', margin: 20}} onPress={()=>{this.props.navigation.goBack()}}  >
+                    <TouchableOpacity style={{ width: 50, height: 50, borderRadius: 25, justifyContent: 'center', alignItems: 'center', margin: 20}} onPress={()=>{this.onPressBack()}}  >
                         <Image source={require('../../image/back.png')} style={{height:35,width:35}}></Image>
                     </TouchableOpacity>
                 </View>

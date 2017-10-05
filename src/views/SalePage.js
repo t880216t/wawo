@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import {StackNavigator} from 'react-navigation';
-import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator';
+import CardStackStyleInterpolator from 'react-navigation/lib/views/CardStack/CardStackStyleInterpolator';
 
 import HTTPUtil from '../compment/HTTPUtil';
 
@@ -22,7 +22,8 @@ import SaleDetail from './sale/sale_detail'
 import SaleAdd from './sale/sale_add'
 import SaleCell from './sale/sale_cell'
 
-var BASEHOST = 'http://192.168.1.101:5000/'
+//var BASEHOST = 'http://192.168.1.101:5000/'
+var BASEHOST = 'http://ownerworld.win:5000/'
 
 class _SalePage extends Component {
     // 构造

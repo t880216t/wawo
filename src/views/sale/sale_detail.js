@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 
 import HTTPUtil from '../../compment/HTTPUtil';
-var BASEHOST = 'http://192.168.1.101:5000/'
+//var BASEHOST = 'http://192.168.1.101:5000/'
+var BASEHOST = 'http://ownerworld.win:5000/'
 
 export default class SaleDetail extends Component {
     static navigationOptions = {
@@ -26,7 +27,7 @@ export default class SaleDetail extends Component {
             createTime : "",
             description:"",
             id : 0,
-            imageUrls : "",
+            imageUrls : [],
             price:0,
             state:0,
             title:"0",
@@ -41,17 +42,11 @@ export default class SaleDetail extends Component {
 
     }
 
-    showImage (){
-        if (this.state.imageUrls != ""){
-            const _images = this.state.imageUrls.split(",")
-            return(
-                _images.map((image)=>{
-                    <Image style={{width: 320, height: 320,marginTop: 5}} source={{uri:image}} key={image}></Image>
-                })
-            )
-        }else {
-            return (<View/>)
-        }
+    showImage(){
+        var images = this.state.imageUrls.map(function (imageUrl) {
+            return <Image source={{uri:imageUrl}} style={{height:320, width:320,marginTop: 5}} key={imageUrl}></Image>
+        });
+        return images
     }
 
     getDetails(item){
@@ -62,12 +57,13 @@ export default class SaleDetail extends Component {
                 //处理 请求success
                 //我们假设业务定义code为0时，数据正常
                 if(json){
+                    var _imagesUrls = json[0].imageUrls.split(",")
                     this.setState({
                         chense:json[0].chense,
                         createTime : json[0].createTime,
                         description:json[0].description,
                         id : json[0].id,
-                        imageUrls : json[0].imageUrls,
+                        imageUrls : _imagesUrls,
                         price:json[0].price,
                         state:json[0].state,
                         title:json[0].title,
@@ -82,7 +78,7 @@ export default class SaleDetail extends Component {
     }
 
     render() {
-
+        let Images = this.showImage();
         return (
             <View>
                 <ScrollView>
@@ -108,8 +104,8 @@ export default class SaleDetail extends Component {
                                         <Text style={{color:'#c09a67',fontSize: 15}}>出售价格:</Text>
                                     </View>
                                     <View style={{marginLeft: 15,borderRadius: 3,justifyContent:'center',flex:7,marginRight: 10}}>
-                                        <Text style={{backgroundColor: 'black',borderRadius:5,color: 'black',height:40,color: 'white'}}>
-                                            {this.state.price}
+                                        <Text style={{borderRadius:5,color: 'black',color:'#c28a13'}}>
+                                            ¥ {this.state.price}
                                         </Text>
                                     </View>
                                 </View>
@@ -117,10 +113,20 @@ export default class SaleDetail extends Component {
                                     <View style={{marginLeft: 15,justifyContent:'center'}}>
                                         <Text style={{color:'#c09a67',fontSize: 15,alignItems: 'flex-end'}}>        成色:</Text>
                                     </View>
-                                    <View style={{marginLeft: 15,height:40,justifyContent:'center',padding: 5,backgroundColor: 'black',borderRadius: 3,flexDirection:'row'}}>
+                                    <View style={{marginLeft: 15,justifyContent:'center',padding: 5,borderRadius: 3,flexDirection:'row'}}>
                                         <Text
-                                            style={{backgroundColor: 'black',borderRadius: 3,justifyContent:'center'}}>
-                                            {this.state.chense}
+                                            style={{borderRadius: 3,color:'white'}}>
+                                            {this.state.chense==0?'全 新':
+                                            this.state.chense==1?'九成新':
+                                            this.state.chense==2?'八成新':
+                                            this.state.chense==3?'七成新':
+                                            this.state.chense==4?'六成新':
+                                            this.state.chense==5?'五成新':
+                                            this.state.chense==6?'四成新':
+                                            this.state.chense==7?'三成新':
+                                            this.state.chense==8?'二成新':
+                                            '老古董'
+                                            }
                                         </Text>
                                     </View>
                                 </View>
@@ -129,17 +135,14 @@ export default class SaleDetail extends Component {
                                         <Text style={{color:'#c09a67',fontSize: 15}}>物品描述:</Text>
                                     </View>
                                     <View style={{borderRadius: 3,justifyContent:'flex-start',marginRight: 10,flex:6}}>
-                                        <Text style={{backgroundColor: 'black',borderRadius:5,minHeight:100,color: '#1EFF00'}}>
+                                        <Text style={{backgroundColor: 'black',borderRadius:5,minHeight:30,color: '#1EFF00'}}>
                                             {this.state.description}
                                         </Text>
                                     </View>
                                 </View>
-                                <View style={{margin: 10}}>
-                                    <Text style={{color:'#c09a67',fontSize: 15,marginTop: 10,marginLeft: 5}}>添加图片:</Text>
-
-                                    <View style={{marginTop: 10,alignItems: 'center', justifyContent: 'center',backgroundColor: 'black',}}>
-                                        {this.showImage.bind(this)}
-                                    </View>
+                                <View style={{flex:1,margin: 10}}>
+                                    <Text style={{color:'#c09a67',fontSize: 15,marginTop: 10,marginLeft: 5}}>图片详情:</Text>
+                                    {Images}
                                 </View>
                             </View>
                             <TouchableOpacity
@@ -171,7 +174,7 @@ const styles = StyleSheet.create({
     },
     backgroundImage:{
         flex:1,
-        height: Dimensions.get('window').height,
+        minHeight: Dimensions.get('window').height,
         resizeMode:'cover'
     },
 })

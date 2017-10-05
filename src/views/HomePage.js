@@ -9,11 +9,12 @@ import {
     Image,
     TextInput,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
 
 import {StackNavigator} from 'react-navigation';
-import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator';
+import CardStackStyleInterpolator from 'react-navigation/lib/views/CardStack/CardStackStyleInterpolator';
 
 //自定义组件
 import HomeCell from './home/home_cell';
@@ -21,7 +22,8 @@ import HomeDetail from './home/home_detail';
 import CoustomButton from '../compment/button'
 
 import HTTPUtil from '../compment/HTTPUtil';
-var BASEHOST = 'http://192.168.1.101:5000/'
+//var BASEHOST = 'http://192.168.1.101:5000/'
+var BASEHOST = 'http://ownerworld.win:5000/'
 
 class _HomePage extends Component {
     // 构造
@@ -30,33 +32,40 @@ class _HomePage extends Component {
         // 初始状态
         this.state = {
             value : [],
-            NumberArr:[{name:'1',city:'北京',pic:'http://wowdb60static.wow-classic.com/images/icons/medium/inv_misc_monsterclaw_03.png'},{name:'2',city:'上海',pic:'http://wowdb60static.wow-classic.com/images/icons/medium/inv_misc_monsterclaw_03.png'},{name:'3',city:'深圳',pic:'http://wowdb60static.wow-classic.com/images/icons/medium/inv_misc_monsterclaw_03.png'},{name:'4',city:'广州'},{name:'5',city:'杭州'},{name:'6',city:'苏州',pic:'http://wowdb60static.wow-classic.com/images/icons/medium/inv_misc_monsterclaw_03.png'},{name:'7',city:'沧州'},{name:'8',city:'邢台'},{name:'9',city:'邯郸'},{name:'10',city:'保定'},{name:'11',city:'石家庄'},{name:'12',city:'山东'},{name:'13',city:'潍坊'},{name:'14',city:'锦州'},{name:'15',city:'固州'},{name:'16',city:'西安'},{name:'17',city:'袁州'},{name:'18',city:'江西'},{name:'19',city:'承德'},{name:'20',city:'秦皇岛'},{name:'21',city:'唐山'},{name:'22',city:'廊坊'},{name:'23',city:'吕梁'},{name:'24',city:'衡水'},{name:'25',city:'山西'},{name:'26',city:'太原'},{name:'27',city:'朔州'},{name:'28',city:'大同'},{name:'29',city:'阳泉'},{name:'30',city:'长治'},{name:'31',city:'晋城'},{name:'32',city:'忻州'},{name:'33',city:'晋中'},{name:'34',city:'临汾'},{name:'35',city:'运城'},{name:'35',city:'包头'},{name:'37',city:'乌海'},{name:'38',city:'赤峰'},{name:'39',city:'沈阳'},{name:'40',city:'通辽'},{name:'41',city:'朝阳'},{name:'42',city:'阜新'},{name:'43',city:'抚顺'},{name:'44',city:'本溪'},{name:'45',city:'辽阳'},{name:'46',city:'鞍山'},{name:'47',city:'丹东'},{name:'48',city:'大连'},{name:'49',city:'营口'},{name:'50',city:'盘锦'},{name:'51',city:'白城'},{name:'52',city:'长春'},{name:'53',city:'吉林'},{name:'54',city:'四平'},{name:'55',city:'辽源'},{name:'56',city:'大庆'},{name:'57',city:'鹤岗'},{name:'58',city:'伊春'},{name:'59',city:'南京'},{name:'60',city:'鸡西'},{name:'61',city:'徐州'},{name:'62',city:'绥化'},{name:'63',city:'宿迁'},{name:'64',city:'淮安'},{name:'65',city:'扬州'},{name:'66',city:'泰州'},{name:'67',city:'南通'},{name:'68',city:'镇江'},{name:'69',city:'常州'},{name:'70',city:'无锡'}],
+            searchKeyWord:''
         };
           this.renderItemView = this.renderItemView.bind(this);
       }
 
-      onChange(value){
+      _onChange(value){
           this.setState({
-              value:value
-          },()=>{console.log("value",this.state.value)} )
+              searchKeyWord:value
+          },()=>{console.log("searchKeyWord",this.state.searchKeyWord)} )
       }
 
     componentWillMount() {
-        this.getmylist();
+        this.getprodlist();
     }
 
     //获取列表数据
-    getmylist(){
+    getprodlist(){
         let formData = new FormData();
-        formData.append("prodName",'')
+        formData.append("prodName",this.state.searchKeyWord)
         HTTPUtil.post(BASEHOST+'getprodlist',formData,'')
             .then((json) => {
                 //处理 请求success
                 //我们假设业务定义code为0时，数据正常
                 console.log(json)
-                this.setState({
-                    value : json
-                })
+                if (json.msg == '未找到提交记录')
+                {
+                    Alert.alert('温馨提醒','无相关产品，换个词试试。',[{text:'确定'}])
+                }
+                else {
+                    this.setState({
+                        value : json
+                    })
+                }
+
 
             },(err)=>{
                 //TODO 处理请求fail
@@ -91,17 +100,23 @@ class _HomePage extends Component {
                                underlineColorAndroid='transparent'
                                keyboardType='default'
                                numberOfLines={1}
-                               disableFullscreenUI={false}
-                               onChange = {(text) => {this.onChange(text)}}
+                               disableFullscreenUI={true}
+                               onChangeText = {(text) =>this._onChange(text)}
                                />
                 </View>
-                <View style={{flex:2}}>
-                    <CoustomButton
-                        normalImage={require('../image/ButtonUp.png')}
-                        selectedImage={require('../image/ButtonDown.png')}
-                        content="搜索"
-                    />
-                </View>
+                <TouchableOpacity
+                    style={{flex:2}}
+                    onPress={this.getprodlist.bind(this)}
+                >
+                    <Image
+                        source={require('../image/ButtonUp.png')}
+                        style={ {marginLeft:5, marginTop:5,width:50,height:30, alignItems:'center',justifyContent:'center',
+                            borderWidth:1, borderColor:'#000', borderRadius:3} }
+                        resizeMode='cover'
+                    >
+                        <Text style={{color:this.state.focused?'grey':'#FFCA00', fontFamily:'微软雅黑'}}>搜索</Text>
+                    </Image>
+                </TouchableOpacity>
             </View>
 
         //给数据追加一个key的字段，不然会有警告的,参数数组中的每一项，需要包含 key 值作为唯一标示
