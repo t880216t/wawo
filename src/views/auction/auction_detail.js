@@ -14,7 +14,7 @@ import HTTPUtil from '../../compment/HTTPUtil';
 //var BASEHOST = 'http://192.168.1.101:5000/'
 var BASEHOST = 'http://ownerworld.win:5000/'
 
-export default class HomeDetail extends Component {
+export default class AuctionDetail extends Component {
     static navigationOptions = {
         tabBarVisible:false,
     };

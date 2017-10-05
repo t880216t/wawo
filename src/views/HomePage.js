@@ -110,7 +110,7 @@ class _HomePage extends Component {
                 >
                     <Image
                         source={require('../image/ButtonUp.png')}
-                        style={ {marginLeft:5, marginTop:5,width:50,height:30, alignItems:'center',justifyContent:'center',
+                        style={ {marginLeft:5,width:50,height:30, alignItems:'center',justifyContent:'center',
                             borderWidth:1, borderColor:'#000', borderRadius:3} }
                         resizeMode='cover'
                     >
