@@ -44,7 +44,8 @@ export default class SaleDetail extends Component {
 
     showImage(){
         var images = this.state.imageUrls.map(function (imageUrl) {
-            return <Image source={{uri:imageUrl}} style={{height:320, width:320,marginTop: 5}} key={imageUrl}></Image>
+            return <Image source={{uri:imageUrl}} style={{height:320, width:320,marginTop: 5}} key={imageUrl}
+                          resizeMode="contain"></Image>
         });
         return images
     }
@@ -149,7 +150,7 @@ export default class SaleDetail extends Component {
                                 style={{justifyContent:'center',flex:1,alignItems: 'center',margin: 10}}
                             >
                                 <Image source={require('../../image/_button.png')} style={{height: 50,justifyContent: 'center'}}>
-                                    <Text style={{color:'#ffae00',fontSize: 18,textAlign: 'center'}}>提交</Text>
+                                    <Text style={{color:'#ffae00',fontSize: 18,textAlign: 'center'}}>不卖了</Text>
                                 </Image>
                             </TouchableOpacity>
                         </View>

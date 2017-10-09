@@ -149,7 +149,7 @@ export default class HomeDetail extends Component {
                                 style={{justifyContent:'center',flex:1,alignItems: 'center',margin: 10}}
                             >
                                 <Image source={require('../../image/_button.png')} style={{height: 50,justifyContent: 'center'}}>
-                                    <Text style={{color:'#ffae00',fontSize: 18,textAlign: 'center'}}>提交</Text>
+                                    <Text style={{color:'#ffae00',fontSize: 18,textAlign: 'center'}}>一口价</Text>
                                 </Image>
                             </TouchableOpacity>
                         </View>
